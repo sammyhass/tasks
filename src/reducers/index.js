@@ -13,12 +13,10 @@ const taskReducer = (state = [], action) => {
 	} else if (action.type === 'DELETE_TASK') {
 		return state.filter(task => task.id !== action.payload);
 	} else if (action.type === 'EDIT_TASK') {
-		const editingTask = state.find(task => task.id === action.payload.id);
-		editingTask.text = action.payload.text;
-		return [
-			...state.filter(task => task.id !== action.payload.id),
-			editingTask,
-		];
+		const editingTask = state.findIndex(task => task.id === action.payload.id);
+		const currentTasks = [...state];
+		currentTasks[editingTask] = action.payload;
+		return currentTasks;
 	}
 
 	return state;
